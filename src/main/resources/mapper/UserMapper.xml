@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xxxx.mapper.UserMapper">
+    <resultMap id="ResultMapUser" type="com.xxxx.entity.User">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="username" column="username" jdbcType="VARCHAR"/>
+        <result property="password" column="password" jdbcType="VARCHAR"/>
+        <result property="salt" column="salt" jdbcType="VARCHAR"/>
+        <result property="email" column="email" jdbcType="VARCHAR"/>
+        <result property="type" column="type" jdbcType="INTEGER"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
+        <result property="activationCode" column="activation_code" jdbcType="VARCHAR"/>
+        <result property="headerUrl" column="header_url" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="User_field">
+        id, username, password, salt, email, type, status, activation_code, header_url, create_time
+    </sql>
+
+    <sql id="User_insert">
+        #{id},#{username},#{password},#{salt},#{email},#{type},
+        #{status},#{activationCode},#{headerUrl},#{createTime}
+    </sql>
+
+
+    <select id="selectById" resultMap="ResultMapUser">
+        select <include refid="User_field"/>
+            from user
+        where id = #{id}
+    </select>
+
+    <select id="selectByName" resultMap="ResultMapUser">
+        select <include refid="User_field"/>
+        from user
+        where username  = #{username}
+    </select>
+
+    <select id="selectByEmail" resultMap="ResultMapUser">
+        select <include refid="User_field"/>
+        from user
+        where email = #{email}
+    </select>
+
+    <insert id="insertUser" parameterType="com.xxxx.entity.User" useGeneratedKeys="true" keyProperty="id">
+        insert into user (
+        <include refid="User_field"/>
+        ) values(
+                 <include refid="User_insert"/>
+        )
+    </insert>
+
+    <update id="updateStatus">
+        update user set
+            status = #{status}
+        where id=#{id}
+    </update>
+
+    <update id="updatePassword">
+        update user set
+            password = #{password}
+        where id=#{id}
+    </update>
+
+    <update id="updateHeader">
+        update user set
+            header_url = #{headerUrl}
+        where id=#{id}
+    </update>
+    <select id="select">
+
+    </select>
+</mapper>
