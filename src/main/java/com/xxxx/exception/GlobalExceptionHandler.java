@@ -10,9 +10,10 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-   @ResponseStatus(HttpStatus.BAD_REQUEST)
-   @ExceptionHandler(value = IllegalArgumentException.class)
+   //@ResponseStatus(HttpStatus.BAD_REQUEST)
+   //@ExceptionHandler(value = IllegalArgumentException.class)
     public String handle(RuntimeException e){
        return e.getMessage();
+
    }
 }

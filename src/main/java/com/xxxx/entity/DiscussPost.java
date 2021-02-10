@@ -12,11 +12,12 @@ import java.util.Date;
 public class DiscussPost implements Serializable {
 
     private int id;
-    private String userId;
+    private int userId;
     private String title;
     private String content;
     private int type;
     private int status;
+    private int commentCount;
     private Date  createTime;
     private double score;
 }

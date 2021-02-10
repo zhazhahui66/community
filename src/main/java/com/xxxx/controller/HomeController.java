@@ -4,6 +4,7 @@ import com.xxxx.entity.DiscussPost;
 import com.xxxx.entity.Page;
 import com.xxxx.service.DiscussPostService;
 import com.xxxx.service.UserService;
+import com.xxxx.service.impl.LikeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.parameters.P;
@@ -26,6 +27,9 @@ public class HomeController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private LikeService likeService;
+
     @GetMapping("/index")
     public String getIndexPage(Model model,Page page){
         page.setPath("/index");
@@ -36,8 +40,8 @@ public class HomeController {
             for (DiscussPost post : list) {
                 Map<String, Object> map = new HashMap<>();
                 map.put("post",post);
-                String userId = post.getUserId();
-                map.put("user",userService.selectById(Integer.valueOf(userId)));
+                map.put("user",userService.selectById(post.getUserId()));
+                map.put("likeCount",likeService.findEntityLikeCount(post.getType(),post.getId()));
                 discussPosts.add(map);
             }
         }
@@ -45,5 +49,8 @@ public class HomeController {
 
         return "/index";
     }
-
+    @GetMapping("/error")
+    public String getErrorPage(){
+        return "/error/500";
+    }
 }

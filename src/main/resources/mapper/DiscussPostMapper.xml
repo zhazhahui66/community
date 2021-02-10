@@ -6,9 +6,12 @@
     <sql id="DiscussPost_field">
         id, user_id, title, content, type, status, create_time,comment_count,score
     </sql>
+    <sql id="insertFields">
+        user_id, title, content, type, status, create_time, comment_count, score
+    </sql>
 
     <sql id="DiscussPost_insert">
-        #{id},#{userId},#{title},#{content},#{type},#{status},
+        #{userId},#{title},#{content},#{type},#{status},
         #{createTime},#{commentCount},#{score}
     </sql>
 
@@ -31,4 +34,37 @@
             and user_id = #{userId}
         </if>
     </select>
+
+    <!--<insert id="publishDiscussPost" parameterType="com.xxxx.entity.DiscussPost" useGeneratedKeys="true" keyProperty="id">
+        insert into discuss_post <include refid="DiscussPost_field"/>
+        values(#{id},#{userId},#{title},#{content},#{type},#{status},#{createTime},#{commentCount},#{score})
+        /*values(#{userId},#{title},#{content},#{type},#{status},
+        #{createTime},#{commentCount},#{score})*/
+    </insert>-->
+
+    <insert id="publishDiscussPost" parameterType="com.xxxx.entity.DiscussPost" keyProperty="id" useGeneratedKeys="true">
+        insert into discuss_post(<include refid="insertFields"/>)
+        values(#{userId},#{title},#{content},#{type},#{status},#{createTime},#{commentCount},#{score})
+    </insert>
+
+    <select id="selectDiscussPost" resultType="com.xxxx.entity.DiscussPost">
+        select <include refid="DiscussPost_field"/>
+        from discuss_post where id = #{id};
+    </select>
+
+    <update id="updateCommentCount">
+        update discuss_post
+        set   comment_count = #{commentCount}
+        where id = #{id};
+    </update>
+    <update id="updateStatus">
+        update discuss_post
+        set status = #{status}
+        where id = #{id}
+    </update>
+    <update id="updateType">
+        update discuss_post
+        set type = #{type}
+        where id = #{id}
+    </update>
 </mapper>

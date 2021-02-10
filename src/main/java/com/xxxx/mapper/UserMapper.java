@@ -3,9 +3,11 @@ package com.xxxx.mapper;
 import com.xxxx.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 @Mapper
+@Repository
 public interface UserMapper {
     User selectById(int id);
     User selectByName(String username);

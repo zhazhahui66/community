@@ -21,5 +21,6 @@ public class User implements Serializable {
     private int status;
     private String activationCode;
     private String headerUrl;
+
     private Date createTime;
 }
