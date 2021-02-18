@@ -62,6 +62,11 @@ public interface CommunityConstant {
      */
     String TOPIC_FOLLOW = "follow";
 
+    /*
+    * 主题发帖
+    * */
+    String TOPIC_PUBLISH = "publish";
+
     /**
      * 系统用户ID
      */
@@ -82,5 +87,6 @@ public interface CommunityConstant {
      * 权限: 版主
      */
     String AUTHORITY_MODERATOR = "moderator";
+
 
 }

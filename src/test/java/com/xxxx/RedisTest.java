@@ -1,7 +1,11 @@
 package com.xxxx;
 
+import org.elasticsearch.client.RequestOptions;
+import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.client.indices.GetIndexRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.redis.connection.RedisConnection;
@@ -10,8 +14,14 @@ import org.springframework.data.redis.core.RedisOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.SessionCallback;
 
+import java.io.IOException;
+
 @SpringBootTest
 public class RedisTest {
+
+    @Autowired
+    @Qualifier("restHighLevelClient")
+    private RestHighLevelClient client;
 
     @Autowired
     private RedisTemplate redisTemplate;
@@ -35,5 +45,12 @@ public class RedisTest {
             }
         });
         System.out.println( redisTemplate.opsForSet().members("key:set"));
+    }
+
+    @Test
+    void testExistIndex()throws IOException {
+        GetIndexRequest request = new GetIndexRequest("index_1");
+        boolean exists = client.indices().exists(request, RequestOptions.DEFAULT);
+        System.out.println(exists);
     }
 }

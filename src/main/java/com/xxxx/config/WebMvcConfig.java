@@ -1,5 +1,6 @@
 package com.xxxx.config;
 
+import com.xxxx.controller.interceptor.DateInterceptor;
 import com.xxxx.controller.interceptor.LoginRequiredInterceptor;
 import com.xxxx.controller.interceptor.LoginTicketInterceptor;
 import com.xxxx.controller.interceptor.MessageInterceptor;
@@ -18,6 +19,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Autowired
     private MessageInterceptor messageInterceptor;
+    @Autowired
+    private DateInterceptor dateInterceptor;
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(loginTicketInterceptor)
@@ -25,6 +28,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
         registry.addInterceptor(loginRequiredInterceptor)
                 .excludePathPatterns("/**/*.css","/**/*.js","/**/*.png","/**/*.jpg","/**/*.jpeg");
         registry.addInterceptor(messageInterceptor)
+                .excludePathPatterns("/**/*.css","/**/*.js","/**/*.png","/**/*.jpg","/**/*.jpeg");
+        registry.addInterceptor(dateInterceptor)
                 .excludePathPatterns("/**/*.css","/**/*.js","/**/*.png","/**/*.jpg","/**/*.jpeg");
     }
 

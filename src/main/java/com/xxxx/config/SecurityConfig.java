@@ -1,5 +1,4 @@
 package com.xxxx.config;
-
 import com.xxxx.util.CommunityConstant;
 import com.xxxx.util.CommunityUtil;
 import org.springframework.context.annotation.Configuration;
@@ -55,7 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements Comm
                 )
                 .antMatchers("/discuss/top","/discuss/wonderful")
                 .hasAnyAuthority(AUTHORITY_MODERATOR)
-                .antMatchers("/discuss/delete")
+                .antMatchers("/discuss/delete","/data")
                 .hasAnyAuthority(AUTHORITY_ADMIN)
 
                 .anyRequest().permitAll()
